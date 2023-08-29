@@ -1,9 +1,22 @@
+import { TextInput } from "@mantine/core";
+import NewButton from "./NewButton";
+import { useState } from "react";
+
 function NewForm() {
+  const [newPokemon, setNewPokemon] = useState("");
+
   return (
     <>
       <form>
-        <label htmlFor="pokemon">New Pokemon</label>
-        <input type="text" id="pokemon" />
+        <TextInput
+          label="Search Pokemon"
+          placeholder="Example: Pikachu"
+          value={newPokemon}
+          onChange={(e) => setNewPokemon(e.target.value)}
+        />
+        <NewButton variant="filled" mt="md">
+          Search
+        </NewButton>
       </form>
     </>
   );
