@@ -1,19 +1,23 @@
-import { Box, Title } from "@mantine/core";
+import { Box, Title, Flex, Grid } from "@mantine/core";
 import NewForm from "./components/NewForm";
-import NewButton from "./components/NewButton";
+import PokemonCard from "./components/PokemonCard";
 import PokeApi from "./infrastructure/PokeApi";
+import { useState } from "react";
 
 function App() {
+  const [pokemons, setPokemons] = useState([]);
 
-  const handleClickTest = async () => {
+  async function addPokemon(pokemon) {
     try {
-      const charmander = await PokeApi.getPokemon("charmander");
-      console.log(charmander);
-      
+      const newPokemon = await PokeApi.getPokemon(pokemon);
+      if (!newPokemon.success) return;
+      setPokemons((prev) => {
+        return [...prev, newPokemon.data];
+      });
     } catch (error) {
       console.dir(error);
     }
-  };
+  }
 
   return (
     <>
@@ -22,13 +26,40 @@ function App() {
           Pokemon To Catch List
         </Title>
         <Box maw={300} mx="auto">
-          <NewForm />
+          <NewForm onSubmit={addPokemon} />
         </Box>
       </div>
-      <Title order={2} align="center" my="lg">
-        List
-      </Title>
-      <NewButton onClick={handleClickTest}>Test</NewButton>
+      <div></div>
+      <Grid mt="lg">
+        <Grid.Col span={4}>
+          <Title order={2} align="center" my="lg">
+            List
+          </Title>
+          <Flex
+            mih={50}
+            gap="xs"
+            justify="center"
+            align="center"
+            direction="row"
+            wrap="wrap"
+          >
+            {pokemons.length === 0 && "No pokemons"}
+            {pokemons.map((pokemon) => {
+              return <PokemonCard pokemonData={pokemon} key={pokemon.id} />;
+            })}
+          </Flex>
+        </Grid.Col>
+        <Grid.Col span={4}>
+          <Title order={2} align="center">
+            Hola
+          </Title>
+        </Grid.Col>
+        <Grid.Col span={4}>
+          <Title order={2} align="center">
+            Mundo
+          </Title>
+        </Grid.Col>
+      </Grid>
     </>
   );
 }
