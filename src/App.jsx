@@ -3,6 +3,7 @@ import NewForm from "./components/NewForm";
 import PokemonCard from "./components/PokemonCard";
 import PokeApi from "./infrastructure/PokeApi";
 import { useState } from "react";
+import PokemonList from "./components/PokemonList";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
@@ -35,19 +36,7 @@ function App() {
           <Title order={2} align="center" my="lg">
             List
           </Title>
-          <Flex
-            mih={50}
-            gap="xs"
-            justify="center"
-            align="center"
-            direction="row"
-            wrap="wrap"
-          >
-            {pokemons.length === 0 && "No pokemons"}
-            {pokemons.map((pokemon) => {
-              return <PokemonCard pokemonData={pokemon} key={pokemon.id} />;
-            })}
-          </Flex>
+          <PokemonList pokemons={pokemons} />
         </Grid.Col>
         <Grid.Col span={4}>
           <Title order={2} align="center">
