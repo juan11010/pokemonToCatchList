@@ -1,6 +1,5 @@
-import { Box, Title, Flex, Grid } from "@mantine/core";
+import { Box, Title } from "@mantine/core";
 import NewForm from "./components/NewForm";
-import PokemonCard from "./components/PokemonCard";
 import PokeApi from "./infrastructure/PokeApi";
 import { useState } from "react";
 import PokemonList from "./components/PokemonList";
