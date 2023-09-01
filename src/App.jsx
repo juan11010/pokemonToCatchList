@@ -20,6 +20,12 @@ function App() {
     }
   }
 
+  function deletePokemon(id) {
+    setPokemons((prev) => {
+      return prev.filter((pokemon) => pokemon.id !== id);
+    });
+  }
+
   return (
     <>
       <div>
@@ -31,24 +37,10 @@ function App() {
         </Box>
       </div>
       <div></div>
-      <Grid mt="lg">
-        <Grid.Col span={4}>
-          <Title order={2} align="center" my="lg">
-            List
-          </Title>
-          <PokemonList pokemons={pokemons} />
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <Title order={2} align="center">
-            Hola
-          </Title>
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <Title order={2} align="center">
-            Mundo
-          </Title>
-        </Grid.Col>
-      </Grid>
+      <Title order={2} align="center" my="lg">
+        List
+      </Title>
+      <PokemonList pokemons={pokemons} deletePokemon={deletePokemon} />
     </>
   );
 }
