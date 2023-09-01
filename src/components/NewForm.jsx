@@ -17,7 +17,7 @@ function NewForm({ onSubmit }) {
     <>
       <form onSubmit={handleSubmit}>
         <TextInput
-          label="Search Pokemon"
+          label="Add Pokemon"
           placeholder="Example: Pikachu"
           value={newPokemon}
           onChange={(e) => setNewPokemon(e.target.value)}

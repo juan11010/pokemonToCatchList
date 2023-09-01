@@ -1,7 +1,7 @@
 import { Flex } from "@mantine/core";
 import PokemonCard from "./PokemonCard";
 
-function PokemonList({ pokemons }) {
+function PokemonList({ pokemons, deletePokemon }) {
   return (
     <Flex
       mih={50}
@@ -13,7 +13,13 @@ function PokemonList({ pokemons }) {
     >
       {pokemons.length === 0 && "No pokemons"}
       {pokemons.map((pokemon) => {
-        return <PokemonCard pokemonData={pokemon} key={pokemon.id} />;
+        return (
+          <PokemonCard
+            {...pokemon}
+            deletePokemon={deletePokemon}
+            key={pokemon.id}
+          />
+        );
       })}
     </Flex>
   );

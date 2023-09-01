@@ -1,24 +1,28 @@
-import { Card, Image, Text, Group } from "@mantine/core";
+import { Card, Checkbox, Group, Image, Text, Tooltip } from "@mantine/core";
+import NewButton from "./NewButton";
 
-function PokemonCard({ pokemonData }) {
+function PokemonCard({ id, name, height, weight, sprites, deletePokemon }) {
   return (
     <Card shadow="lg" padding="lg" radius="md" withBorder my="md">
       <Card.Section>
-        <Image
-          src={pokemonData.sprites.front_default}
-          height={160}
-          alt={pokemonData.name}
-        />
+        <Image src={sprites.front_default} height={160} alt={name} />
       </Card.Section>
 
       <Group position="center" mt="md" mb="xs">
-        <Text weight={500}>{pokemonData.name}</Text>
+        <Text weight={500}>{name.toUpperCase()}</Text>
+        <Checkbox label="Caught" />
       </Group>
 
       <Text size="sm" color="dimmed">
-        height: {pokemonData.height}
-        weight: {pokemonData.weight}
+        Height: {height} cm Weight: {weight}
       </Text>
+
+      <Group position="center" mt="sm" mb="xs">
+        <Tooltip label="Caught needs to be checked">
+          <NewButton disabled>Rename</NewButton>
+        </Tooltip>
+        <NewButton color="red" onClick={() => deletePokemon(id)}>Delete</NewButton>
+      </Group>
     </Card>
   );
 }
