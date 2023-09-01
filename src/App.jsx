@@ -21,8 +21,8 @@ function App() {
   }
 
   function deletePokemon(id) {
-    setPokemons((prev) => {
-      return prev.filter((pokemon) => pokemon.id !== id);
+    setPokemons((currentPokemon) => {
+      return currentPokemon.filter((pokemon) => pokemon.id !== id);
     });
   }
 
