@@ -18,10 +18,10 @@ function PokemonCard({ id, name, height, weight, sprites, deletePokemon }) {
       </Text>
 
       <Group position="center" mt="sm" mb="xs">
-        <Tooltip label="Caught needs to be checked">
-          <NewButton disabled>Rename</NewButton>
-        </Tooltip>
-        <NewButton color="red" onClick={() => deletePokemon(id)}>Delete</NewButton>
+        <NewButton disabled>Rename</NewButton>
+        <NewButton color="red" onClick={() => deletePokemon(id)}>
+          Delete
+        </NewButton>
       </Group>
     </Card>
   );
