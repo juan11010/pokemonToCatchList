@@ -1,7 +1,7 @@
 import { Flex } from "@mantine/core";
 import PokemonCard from "./PokemonCard";
 
-function PokemonList({ pokemons, deletePokemon, renamePokemon }) {
+function PokemonList({ pokemons, deletePokemon, renamePokemon, updateCaughtState }) {
   return (
     <Flex
       mih={50}
@@ -18,7 +18,8 @@ function PokemonList({ pokemons, deletePokemon, renamePokemon }) {
             {...pokemon}
             deletePokemon={deletePokemon}
             renamePokemon={renamePokemon}
-            key={pokemon.id}
+            updateCaughtState={updateCaughtState}
+            key={crypto.randomUUID()}
           />
         );
       })}

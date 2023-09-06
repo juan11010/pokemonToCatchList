@@ -1,19 +1,20 @@
 import { Box, Grid, Title } from "@mantine/core";
 import NewForm from "./components/NewForm";
 import PokeApi from "./infrastructure/PokeApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PokemonList from "./components/PokemonList";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
+  const [caughtPokemons, setCaughtPokemons] = useState([]);
 
   async function addPokemon(pokemon) {
     try {
       const newPokemon = await PokeApi.getPokemon(pokemon);
       if (!newPokemon.success) return;
       newPokemon.data.caught = false;
+      newPokemon.data.id = crypto.randomUUID();
       setPokemons((prev) => {
-        console.log(newPokemon.data);
         return [...prev, newPokemon.data];
       });
     } catch (error) {
@@ -35,6 +36,19 @@ function App() {
     });
   }
 
+  function updateCaughtState(id, caught) {
+    setPokemons((currentPokemons) => {
+      return currentPokemons.map((pokemon) =>
+        pokemon.id === id ? { ...pokemon, caught } : pokemon,
+      );
+    });
+  }
+
+  useEffect(() => {
+    const caught = pokemons.filter((pokemon) => pokemon.caught);
+    setCaughtPokemons(caught);
+  }, [pokemons]);
+
   return (
     <>
       <div>
@@ -51,7 +65,12 @@ function App() {
             <Title order={2} align="center" my="lg">
               Pokemon List
             </Title>
-            <PokemonList pokemons={pokemons} deletePokemon={deletePokemon} renamePokemon={renamePokemon}/>
+            <PokemonList
+              pokemons={pokemons}
+              deletePokemon={deletePokemon}
+              renamePokemon={renamePokemon}
+              updateCaughtState={updateCaughtState}
+            />
           </Grid.Col>
           <Grid.Col span={4}>
             <Title order={2} align="center" my="lg">
@@ -62,6 +81,12 @@ function App() {
             <Title order={2} align="center" my="lg">
               Pokemon Caught
             </Title>
+            <PokemonList
+              pokemons={caughtPokemons}
+              deletePokemon={deletePokemon}
+              renamePokemon={renamePokemon}
+              updateCaughtState={updateCaughtState}
+            />
           </Grid.Col>
         </Grid>
       </div>
