@@ -56,7 +56,7 @@ function App() {
 
   useEffect(() => {
     const caught = pokemons.filter((pokemon) => pokemon.caught);
-    const important = pokemons.filter((pokemon) => pokemon.important);
+    const important = pokemons.filter((pokemon) => pokemon.important && !pokemon.caught);
     setCaughtPokemons(caught);
     setImportantPokemons(important);
   }, [pokemons]);
