@@ -7,12 +7,14 @@ import PokemonList from "./components/PokemonList";
 function App() {
   const [pokemons, setPokemons] = useState([]);
   const [caughtPokemons, setCaughtPokemons] = useState([]);
+  const [importantPokemons, setImportantPokemons] = useState([]);
 
   async function addPokemon(pokemon) {
     try {
       const newPokemon = await PokeApi.getPokemon(pokemon);
       if (!newPokemon.success) return;
       newPokemon.data.caught = false;
+      newPokemon.data.important = false;
       newPokemon.data.id = crypto.randomUUID();
       setPokemons((prev) => {
         return [...prev, newPokemon.data];
@@ -44,9 +46,19 @@ function App() {
     });
   }
 
+  function toggleImportant(id, important) {
+    setPokemons((currentPokemons) => {
+      return currentPokemons.map((pokemon) =>
+        pokemon.id === id ? { ...pokemon, important } : pokemon,
+      );
+    });
+  }
+
   useEffect(() => {
     const caught = pokemons.filter((pokemon) => pokemon.caught);
+    const important = pokemons.filter((pokemon) => pokemon.important);
     setCaughtPokemons(caught);
+    setImportantPokemons(important);
   }, [pokemons]);
 
   return (
@@ -70,12 +82,20 @@ function App() {
               deletePokemon={deletePokemon}
               renamePokemon={renamePokemon}
               updateCaughtState={updateCaughtState}
+              toggleImportant={toggleImportant}
             />
           </Grid.Col>
           <Grid.Col span={4}>
             <Title order={2} align="center" my="lg">
-              Pokemon Urgent
+              Important to catch
             </Title>
+            <PokemonList
+              pokemons={importantPokemons}
+              deletePokemon={deletePokemon}
+              renamePokemon={renamePokemon}
+              updateCaughtState={updateCaughtState}
+              toggleImportant={toggleImportant}
+            />
           </Grid.Col>
           <Grid.Col span={4}>
             <Title order={2} align="center" my="lg">
@@ -86,6 +106,7 @@ function App() {
               deletePokemon={deletePokemon}
               renamePokemon={renamePokemon}
               updateCaughtState={updateCaughtState}
+              toggleImportant={toggleImportant}
             />
           </Grid.Col>
         </Grid>

@@ -19,9 +19,11 @@ function PokemonCard({
   weight,
   sprites,
   caught,
+  important,
   deletePokemon,
   renamePokemon,
   updateCaughtState,
+  toggleImportant,
 }) {
   const [opened, { open, close }] = useDisclosure(false);
   const [newName, setNewName] = useState("");
@@ -52,8 +54,8 @@ function PokemonCard({
         <Badge color="red" variant="light" size="lg">
           <Checkbox
             label="Important"
-            // checked={caught}
-            // onChange={(e) => updateCaughtState(id, e.target.checked)}
+            checked={important}
+            onChange={(e) => toggleImportant(id, e.target.checked)}
           />
         </Badge>
       </Group>
