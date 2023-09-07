@@ -1,4 +1,5 @@
 import {
+  AspectRatio,
   Badge,
   Card,
   Checkbox,
@@ -37,9 +38,11 @@ function PokemonCard({
   }
 
   return (
-    <Card shadow="lg" padding="lg" radius="md" withBorder my="md">
+    <Card shadow="lg" padding="xs" radius="xs" withBorder my="md">
       <Card.Section>
+        <AspectRatio ratio={1 / 1}>
         <Image src={sprites.front_default} height={160} alt={name} />
+        </AspectRatio>
       </Card.Section>
 
       <Text weight={500} align="center">
