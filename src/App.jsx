@@ -3,16 +3,23 @@ import NewForm from "./components/NewForm";
 import PokeApi from "./infrastructure/PokeApi";
 import { useEffect, useState } from "react";
 import PokemonList from "./components/PokemonList";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
   const [caughtPokemons, setCaughtPokemons] = useState([]);
   const [importantPokemons, setImportantPokemons] = useState([]);
 
+  const notify = () => toast.error("Pokemon not found");
+
   async function addPokemon(pokemon) {
     try {
       const newPokemon = await PokeApi.getPokemon(pokemon);
-      if (!newPokemon.success) return;
+      if (!newPokemon.success) {
+        notify()
+        return
+      }
       newPokemon.data.caught = false;
       newPokemon.data.important = false;
       newPokemon.data.id = crypto.randomUUID();
@@ -56,13 +63,27 @@ function App() {
 
   useEffect(() => {
     const caught = pokemons.filter((pokemon) => pokemon.caught);
-    const important = pokemons.filter((pokemon) => pokemon.important && !pokemon.caught);
+    const important = pokemons.filter(
+      (pokemon) => pokemon.important && !pokemon.caught,
+    );
     setCaughtPokemons(caught);
     setImportantPokemons(important);
   }, [pokemons]);
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="colored"
+      />
       <div>
         <Title order={1} align="center" my="lg">
           Pokemon To Catch List
