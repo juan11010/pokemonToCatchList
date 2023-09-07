@@ -1,26 +1,29 @@
 import { TextInput } from "@mantine/core";
-import { useState } from "react";
+import { joiResolver, useForm } from "@mantine/form";
 import NewButton from "./NewButton";
+import schema from "../schema";
 
 function NewForm({ onSubmit }) {
-  const [newPokemon, setNewPokemon] = useState("");
+  const form = useForm({
+    validate: joiResolver(schema),
+    initialValues: {
+      pokemon: "",
+    },
+  });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (newPokemon === "") return;
-    const pokemonLowerCase = newPokemon.toLowerCase();
+  function handleSubmit(values) {
+    const pokemonLowerCase = values.pokemon.toLowerCase();
     onSubmit(pokemonLowerCase);
-    setNewPokemon("");
+    form.setFieldValue("pokemon", "");
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <TextInput
           label="Add Pokemon"
           placeholder="Example: Pikachu"
-          value={newPokemon}
-          onChange={(e) => setNewPokemon(e.target.value)}
+          {...form.getInputProps("pokemon")}
         />
         <NewButton variant="filled" type="submit" mt="md">
           Search
