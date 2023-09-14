@@ -1,7 +1,7 @@
 import { Box, Grid, Title } from "@mantine/core";
 import NewForm from "./components/NewForm";
 import PokeApi from "./infrastructure/PokeApi";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PokemonList from "./components/PokemonList";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,15 +10,17 @@ function App() {
   const [pokemons, setPokemons] = useState([]);
   const [caughtPokemons, setCaughtPokemons] = useState([]);
   const [importantPokemons, setImportantPokemons] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const notify = () => toast.error("Pokemon not found");
 
   async function addPokemon(pokemon) {
     try {
+      setIsLoading(true);
       const newPokemon = await PokeApi.getPokemon(pokemon);
       if (!newPokemon.success) {
-        notify()
-        return
+        notify();
+        return;
       }
       newPokemon.data.caught = false;
       newPokemon.data.important = false;
@@ -28,6 +30,8 @@ function App() {
       });
     } catch (error) {
       console.dir(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -61,6 +65,8 @@ function App() {
     });
   }
 
+  // useMemo(() => first, [second])
+
   useEffect(() => {
     const caught = pokemons.filter((pokemon) => pokemon.caught);
     const important = pokemons.filter(
@@ -89,7 +95,7 @@ function App() {
           Pokemon To Catch List
         </Title>
         <Box maw={300} mx="auto">
-          <NewForm onSubmit={addPokemon} />
+          <NewForm onSubmit={addPokemon} isLoading={isLoading} />
         </Box>
       </div>
       <div>

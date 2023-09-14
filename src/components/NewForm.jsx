@@ -3,7 +3,7 @@ import { joiResolver, useForm } from "@mantine/form";
 import NewButton from "./NewButton";
 import schema from "../schema";
 
-function NewForm({ onSubmit }) {
+function NewForm({ onSubmit, isLoading }) {
   const form = useForm({
     validate: joiResolver(schema),
     initialValues: {
@@ -25,7 +25,7 @@ function NewForm({ onSubmit }) {
           placeholder="Example: Pikachu"
           {...form.getInputProps("pokemon")}
         />
-        <NewButton variant="filled" type="submit" mt="md">
+        <NewButton variant="filled" type="submit" mt="md" loading={isLoading}>
           Search
         </NewButton>
       </form>
