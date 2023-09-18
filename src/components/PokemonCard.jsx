@@ -41,7 +41,7 @@ function PokemonCard({
     <Card shadow="lg" padding="xs" radius="xs" withBorder my="md">
       <Card.Section>
         <AspectRatio ratio={1 / 1}>
-        <Image src={sprites.front_default} height={160} alt={name} />
+          <Image src={sprites.front_default} height={160} alt={name} />
         </AspectRatio>
       </Card.Section>
 
