@@ -65,16 +65,26 @@ function App() {
     });
   }
 
-  // useMemo(() => first, [second])
-
-  useEffect(() => {
+  useMemo(() => {
     const caught = pokemons.filter((pokemon) => pokemon.caught);
+    setCaughtPokemons(caught);
+  }, [pokemons]);
+
+  useMemo(() => {
     const important = pokemons.filter(
       (pokemon) => pokemon.important && !pokemon.caught,
     );
-    setCaughtPokemons(caught);
     setImportantPokemons(important);
   }, [pokemons]);
+
+  // useEffect(() => {
+  //   const caught = pokemons.filter((pokemon) => pokemon.caught);
+  //   const important = pokemons.filter(
+  //     (pokemon) => pokemon.important && !pokemon.caught,
+  //   );
+  //   setCaughtPokemons(caught);
+  //   setImportantPokemons(important);
+  // }, [pokemons]);
 
   return (
     <>
