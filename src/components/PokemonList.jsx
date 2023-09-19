@@ -17,7 +17,6 @@ function PokemonList({
         align="center"
         direction="row"
         wrap="wrap"
-        bg="dark"
       >
         {pokemons.length === 0 && "No pokemons"}
         {pokemons.map((pokemon) => {
