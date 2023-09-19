@@ -5,6 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import PokemonList from "./components/PokemonList";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { addPokemons } from "./redux/pokemonsSlice";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
@@ -13,6 +15,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const notify = () => toast.error("Pokemon not found");
+  const dispatch = useDispatch();
 
   async function addPokemon(pokemon) {
     try {
@@ -25,6 +28,8 @@ function App() {
       newPokemon.data.caught = false;
       newPokemon.data.important = false;
       newPokemon.data.id = crypto.randomUUID();
+      console.log(newPokemon.data);
+      dispatch(addPokemons(newPokemon.data));
       setPokemons((prev) => {
         return [...prev, newPokemon.data];
       });

@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   pokemons: [],
@@ -8,12 +8,9 @@ export const pokemonsSlice = createSlice({
   name: "pokemons",
   initialState,
   reducers: {
-    addpokemon: (state, action) => {
-      const pokemon = {
-        id: nanoid(),
-        data: action.payload,
-      };
-      state.pokemons.push(pokemon);
+    addPokemons: (state, action) => {
+      const PokemonData = action.payload;
+      state.pokemons.push(PokemonData);
     },
 
     deletePokemon: (state, action) => {
@@ -22,11 +19,14 @@ export const pokemonsSlice = createSlice({
       );
     },
 
-    renamePokemon: (state, action) => {},
+    // renamePokemon: (state, action) => {
+    //   const { id, newName } = action.payload
+    //
+    // },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addpokemon, deletePokemon } = pokemonsSlice.actions;
+export const { addPokemons, deletePokemon } = pokemonsSlice.actions;
 
 export default pokemonsSlice.reducer;
