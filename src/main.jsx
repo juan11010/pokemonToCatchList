@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <MantineProvider
-      theme={{ colorScheme: "dark" }}
+      theme={{ colorScheme: "light" }}
       withGlobalStyles
       withNormalizeCSS
     >
